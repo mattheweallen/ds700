@@ -1,4 +1,6 @@
 # Load the ggplot2 package for creating graphics
+remove.packages("ggplot")
+install.packages("ggplot2")
 require(ggplot2)
 # Load the diamonds dataset, it is part of ggplot2
 data(diamonds)
@@ -17,7 +19,7 @@ boxplot(diamonds$carat)
 # Histogram of diamond carats using ggplot2
 ggplot(data = diamonds) + geom_histogram(aes(x = carat))
 # You can change the color using the fill argument
-ggplot(data = diamonds) + geom_histogram(aes(x = carat), fill = "grey50")
+ggplot(data = diamonds) + geom_histogram(aes(x = carat), fill = "grey50") #
 # Scatterplot using ggplot2
 ggplot(diamonds, aes(x = carat, y = price)) + geom_point()
 # Save the ggplot object to a varibale
