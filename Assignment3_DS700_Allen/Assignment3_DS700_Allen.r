@@ -21,7 +21,7 @@ summary(model)
 #coeff plot
 coefplot(model, vertical=FALSE, mar=c(5,5,2,2))
 
-#try two other models and compare AIC, lower AIC the better
+#try three other models and compare AIC, lower AIC the better
 model2 <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts,data=income_data,family="binomial")
 
 
