@@ -1,4 +1,3 @@
-#install package for coefficient plot
 install.packages("arm")
 library(arm) # for coefplot()
 # Load data
@@ -12,14 +11,22 @@ plot(d, main = "Density Plot of Family Income", xlab="Family Income") # plots th
 #histogram of family income
 hist(income_data$FamilyIncome, main = "Histogram of Family Income", xlab="Family Income")
 # Fit logistic regression
-model <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts+Insurance,data=income_data,family="binomial")
+model <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts+FoodStamp,data=income_data,family="binomial")
 
 # Display the model
 model
 # Display summary of the model
 summary(model)
-#coeff plot
-coefplot(model, vertical=FALSE, mar=c(5,5,2,2))
+par(mfrow=c(1,1))
+plot(income_data$FamilyIncomeGreaterThanOrEqualTo150000~income_data$HouseCosts)
+
+par(mfrow=c(2,2))
+plot(model)
+
+
+newData <- data.frame(HouseCosts=100,FoodStamp='Yes')
+# Predict if income greater than or equal to 150,000 for HouseCosts=100 and FoodStamp ='Yes'
+predict(model,newData, type = "response")
 
 #try two other models and compare AIC, lower AIC the better
 model2 <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts,data=income_data,family="binomial")
@@ -28,7 +35,7 @@ model2 <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts,data=inc
 coefplot(model2, vertical=FALSE, mar=c(5,5,2,2))
 summary(model2)
 
-model3 <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts+FoodStamp,data=income_data,family="binomial")
+model3 <- glm(formula=FamilyIncomeGreaterThanOrEqualTo150000~HouseCosts+Insurance,data=income_data,family="binomial")
 
 
 
