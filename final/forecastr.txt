@@ -1,0 +1,43 @@
+# read data from CSV file
+forecast <- read.csv("forecast.csv", header = T)
+head(forecast)
+# plot time series
+plot.ts(forecast$Demand)
+# forecast using Holt-Winters Exponential Smoothing
+forecast.mean <- HoltWinters(forecast$Demand, alpha = 0.2, beta=FALSE, gamma=FALSE)
+forecast.predict <- predict(forecast.mean, n.ahead = 10, prediction.interval = TRUE)
+forecast.predict
+# look at the fitted values
+forecast.mean$fitted
+# Plot data
+plot.ts(forecast$Demand, xlim=c(10, 47))
+lines(forecast.mean$fitted[,1], col="green")
+lines(forecast.predict[,1], col="blue")
+lines(forecast.predict[,2], col="red")
+lines(forecast.predict[,3], col="red")
+forecast.mean$fitted
+# since the model doesn't fit well. Let us add trend component (beta)
+forecast.mean2 <- HoltWinters(forecast$Demand, alpha = 0.2, beta=TRUE, gamma=FALSE)
+#predict again
+forecast.predict2 <- predict(forecast.mean2, n.ahead = 10, prediction.interval = TRUE)
+forecast.predict2
+# Let us look at the trend values
+forecast.mean2$fitted
+# Plot data again
+plot.ts(forecast$Demand, xlim=c(10, 47))
+lines(forecast.mean2$fitted[,1], col="green")
+lines(forecast.predict2[,1], col="blue")
+lines(forecast.predict2[,2], col="red")
+lines(forecast.predict2[,3], col="red")
+
+# Let R calaculate best values for alpha
+forecast.mean3 <- HoltWinters(forecast$Demand, gamma=FALSE)
+# check alpha and beta suggested by R
+forecast.mean3
+forecast.predict3 <- predict(forecast.mean3, n.ahead = 10, prediction.interval = TRUE)
+forecast.predict3
+plot.ts(forecast$Demand, xlim=c(10, 47))
+lines(forecast.mean3$fitted[,1], col="green")
+lines(forecast.predict3[,1], col="blue")
+lines(forecast.predict3[,2], col="red")
+lines(forecast.predict3[,3], col="red")
